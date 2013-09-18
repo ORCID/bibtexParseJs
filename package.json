@@ -1,34 +1,29 @@
 {
-  "name": "bibtex-parser",
+  "name": "bibtexParserJs",
   "version": "0.0.0",
-  "description": "CommonJS port of BibTeX-js",
-  "main": "parse-bibtex.js",
+  "description": "A JavaScript library that parses BibTeX to JSON",
+  "main": "bibtexParse.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
   },
-  "devDependencies": {
-    "tape": "~1.0.4"
-  },
   "scripts": {
-    "test": "tap test/*.js"
+    "test": "node runTest.js"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mikolalysenko/bibtex-parser.git"
+    "url": "https://github.com/ORCID/bibtexParseJs"
   },
   "keywords": [
     "bibtex",
-    "commonjs",
+    "json",
     "javascript",
     "parser"
   ],
-  "author": "Henrik Muehe",
   "license": "MIT",
   "readmeFilename": "README.md",
-  "gitHead": "12b10f4050daa9966c476853edae12108a0bab8b",
   "bugs": {
-    "url": "https://github.com/mikolalysenko/bibtex-parser/issues"
+    "url": "https://github.com/ORCID/bibtexParseJs/issues"
   }
 }

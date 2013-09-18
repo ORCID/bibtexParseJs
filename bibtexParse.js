@@ -20,6 +20,8 @@
 //  value -> value_quotes | value_braces | key;
 //  value_quotes -> '"' .*? '"'; // not quite
 //  value_braces -> '{' .*? '"'; // not quite
+(function(exports){
+
 function BibtexParser() {
   this.pos = 0;
   this.input = "";
@@ -239,12 +241,12 @@ function BibtexParser() {
   }
 }
 
-//Runs the parser
-function doParse(input) {
+exports.parse = function(input) {
   var b = new BibtexParser()
   b.setInput(input)
   b.bibtex()
   return b.entries
-}
+};
 
-module.exports = doParse
+
+})(typeof exports === 'undefined'? this['bibtexParse']={}: exports);
