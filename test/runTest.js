@@ -1,12 +1,14 @@
-var assert = require('assert'), 
-   fs = require('fs'),
-   bibtexParse = require('./bibtexParse');
+var assert = require('assert'),
+    fs = require('fs'),
+    bibtexParse = require('../bibtexParse');
 
+console.log('starting test');
 
 var goodFiles = fs.readdirSync('./test/good');
-goodFiles.forEach(function(file){ 
-    console.log(file + '-----------------------------------------------');
-    var bibTexStr = fs.readFileSync('./test/good/'+file,'utf8');
+goodFiles.forEach(function (file) {
+    console.log(file)
+    console.log('-----------------------------------------------');
+    var bibTexStr = fs.readFileSync('./test/good/' + file, 'utf8');
     console.log(bibTexStr);
 
     var bibTexJson = bibtexParse.parse(bibTexStr);
@@ -17,9 +19,10 @@ goodFiles.forEach(function(file){
 });
 
 var badFiles = fs.readdirSync('./test/bad');
-badFiles.forEach(function(file){ 
-    console.log(file + '-----------------------------------------------');
-    var bibTexStr = fs.readFileSync('./test/bad/'+file,'utf8');
+badFiles.forEach(function (file) {
+    console.log(file);
+    console.log('-----------------------------------------------');
+    var bibTexStr = fs.readFileSync('./test/bad/' + file, 'utf8');
     console.log(bibTexStr);
 
     try {
@@ -34,6 +37,4 @@ badFiles.forEach(function(file){
     console.log();
 });
 
-console.log("test complete");
-
-
+console.log('test complete');

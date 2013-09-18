@@ -60,7 +60,7 @@ console.log(bibtexParse.parse((bibliography))
 ```
 
 ## Contributing
-   Contributions are welcome. Please make sure the unit test(runTest.js) reflects the
+   Contributions are welcome. Please make sure the unit test(test/runTest.js) reflects the
    changes and completes successfully. 
 
 

@@ -9,7 +9,7 @@
   "dependencies": {
   },
   "scripts": {
-    "test": "node runTest.js"
+    "test": "node test/runTest.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
     "javascript",
     "parser"
   ],
+  "author": "rcpeters",
   "license": "MIT",
   "readmeFilename": "README.md",
   "bugs": {
