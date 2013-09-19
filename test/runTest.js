@@ -11,7 +11,7 @@ goodFiles.forEach(function (file) {
     var bibTexStr = fs.readFileSync('./test/good/' + file, 'utf8');
     //console.log(bibTexStr);
 
-    var bibTexJson = bibtexParse.parse(bibTexStr);
+    var bibTexJson = bibtexParse.toJSON(bibTexStr);
     console.log(bibTexJson);
     assert(Object.keys(bibTexJson).length > 0);
     console.log();
@@ -26,7 +26,7 @@ badFiles.forEach(function (file) {
     //console.log(bibTexStr);
 
     try {
-        var bibTexJson = bibtexParse.parse(bibTexStr);
+        var bibTexJson = bibtexParse.toJSON(bibTexStr);
     } catch (err) {
         console.log('expected error ' + err);
         bibTexJson = {};

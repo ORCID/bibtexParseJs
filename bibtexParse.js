@@ -1,4 +1,4 @@
-/* start bibtexParse 0.0.1 */
+/* start bibtexParse 0.0.2 */
 
 // Original work by Henrik Muehe (c) 2010
 //
@@ -259,7 +259,7 @@
         }
     }
 
-    exports.parse = function (input) {
+    exports.toJSON = function (input) {
         var b = new BibtexParser();
         b.setInput(input);
         b.bibtex();
