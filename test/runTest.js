@@ -9,7 +9,7 @@ goodFiles.forEach(function (file) {
     console.log(file)
     console.log('-----------------------------------------------');
     var bibTexStr = fs.readFileSync('./test/good/' + file, 'utf8');
-    console.log(bibTexStr);
+    //console.log(bibTexStr);
 
     var bibTexJson = bibtexParse.parse(bibTexStr);
     console.log(bibTexJson);
@@ -23,7 +23,7 @@ badFiles.forEach(function (file) {
     console.log(file);
     console.log('-----------------------------------------------');
     var bibTexStr = fs.readFileSync('./test/bad/' + file, 'utf8');
-    console.log(bibTexStr);
+    //console.log(bibTexStr);
 
     try {
         var bibTexJson = bibtexParse.parse(bibTexStr);

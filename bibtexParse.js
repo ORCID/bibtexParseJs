@@ -1,3 +1,5 @@
+/* start bibtexParse 0.0.1 */
+
 // Original work by Henrik Muehe (c) 2010
 //
 // CommonJS port by Mikola Lysenko 2013
@@ -25,7 +27,7 @@
         this.pos = 0;
         this.input = "";
 
-        this.entries = {};
+        this.entries = new Array();
         this.strings = {
             JAN: "January",
             FEB: "February",
@@ -40,7 +42,7 @@
             NOV: "November",
             DEC: "December"
         };
-        this.currentKey = "";
+        
         this.currentEntry = "";
 
 
@@ -75,6 +77,19 @@
             }
             this.skipWhitespace();
         }
+        
+        /* when search for a match  all text can be ignored, not just white space */
+		this.matchAt = function () {
+            while (this.input.length > this.pos && this.input[this.pos] != '@') {
+                this.pos++;
+            }
+
+            if (this.input[this.pos] == '@') {
+                return true;
+            } 
+            return false;
+        }
+
 
         this.skipWhitespace = function () {
             while (this.isWhitespace(this.input[this.pos])) {
@@ -181,7 +196,8 @@
 
         this.key_value_list = function () {
             var kv = this.key_equals_value();
-            this.entries[this.currentEntry][kv[0]] = kv[1];
+            this.currentEntry['entryTags'] = {};
+            this.currentEntry['entryTags'][kv[0]] = kv[1];
             while (this.tryMatch(",")) {
                 this.match(",");
                 // fixes problems with commas at the end of a list
@@ -189,17 +205,17 @@
                     break;
                 }
                 kv = this.key_equals_value();
-                this.entries[this.currentEntry][kv[0]] = kv[1];
+                this.currentEntry['entryTags'][kv[0]] = kv[1];
             }
         }
 
         this.entry_body = function (d) {
-            this.currentEntry = this.key();
-            this.entries[this.currentEntry] = {
-                entryType: d.substring(1)
-            };
+            this.currentEntry = {}; 
+            this.currentEntry['citationKey'] = this.key();
+            this.currentEntry['entryType'] = d.substring(1);
             this.match(",");
             this.key_value_list();
+            this.entries.push(this.currentEntry);
         }
 
         this.directive = function () {
@@ -217,7 +233,8 @@
         }
 
         this.comment = function () {
-            this.value(); // this is wrong
+        	//this.matchAt();
+            this.single_value();
         }
 
         this.entry = function (d) {
@@ -225,7 +242,7 @@
         }
 
         this.bibtex = function () {
-            while (this.tryMatch("@")) {
+            while (this.matchAt()) {
                 var d = this.directive().toUpperCase();
                 this.match("{");
                 if (d == "@STRING") {
@@ -233,7 +250,7 @@
                 } else if (d == "@PREAMBLE") {
                     this.preamble();
                 } else if (d == "@COMMENT") {
-                    this.comment();
+                	this.comment();
                 } else {
                     this.entry(d);
                 }
@@ -243,11 +260,13 @@
     }
 
     exports.parse = function (input) {
-        var b = new BibtexParser()
-        b.setInput(input)
-        b.bibtex()
+        var b = new BibtexParser();
+        b.setInput(input);
+        b.bibtex();
         return b.entries
     };
 
 
 })(typeof exports === 'undefined' ? this['bibtexParse'] = {} : exports);
+
+/* end bibtexParse */

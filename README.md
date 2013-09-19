@@ -22,10 +22,12 @@ var sample = bibtexParse.parse('@article{sample1,title={sample title}}');
 console.log(sample);
 ``` 
 
-**Returns** A parsed bibtex file as a JSON object
+**Returns** A parsed bibtex file as a JSON Array Object
 
 ```
-{ SAMPLE1: { entryType: 'ARTICLE', TITLE: 'sample title' } }
+[ { citationKey: 'SAMPLE1',
+    entryType: 'ARTICLE',
+    entryTags: { TITLE: 'sample title' } } ]
 ```
 
 ## Contributing
