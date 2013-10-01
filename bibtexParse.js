@@ -1,4 +1,4 @@
-/* start bibtexParse 0.0.2 */
+/* start bibtexParse 0.0.3 */
 
 // Original work by Henrik Muehe (c) 2010
 //
@@ -124,6 +124,21 @@
                 this.pos++;
             }
         }
+        
+        this.value_comment = function () {
+             var str = '';
+             var brcktCnt = 0;
+             while (!(this.tryMatch("}") && brcktCnt == 0)) {
+                str = str + this.input[this.pos];
+                if (this.input[this.pos] == '{') brcktCnt++;
+                if (this.input[this.pos] == '}') brcktCnt--;
+                if (this.pos == this.input.length - 1) {
+                    throw "Unterminated value:" + this.input.substring(start);
+                }
+                this.pos++;
+             }
+             return str;
+        }
 
         this.value_quotes = function () {
             this.match('"');
@@ -229,12 +244,17 @@
         }
 
         this.preamble = function () {
-            this.value();
+            this.currentEntry = {};
+        	this.currentEntry['entryType'] = 'PREAMBLE';
+        	this.currentEntry['entry'] = this.value();
+            this.entries.push(this.currentEntry);
         }
 
         this.comment = function () {
-        	//this.matchAt();
-            this.single_value();
+        	this.currentEntry = {};
+        	this.currentEntry['entryType'] = 'COMMENT';
+        	this.currentEntry['entry'] = this.value_comment();
+			this.entries.push(this.currentEntry);
         }
 
         this.entry = function (d) {
