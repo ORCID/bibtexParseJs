@@ -12,10 +12,10 @@ bibtexParse.toJSON('@article{sample1,title={sample title}}');
 ```
 
 ## Using in [Node.js](http://nodejs.org/)
-Install     ```npm install bibtex-parser-js```
+Install     ```npm install bibtex-parse-js```
 
 ```
-var bibtexParse = require('bibtex-parser-js');
+var bibtexParse = require('bibtex-parse-js');
 
 var sample = bibtexParse.toJSON('@article{sample1,title={sample title}}');
 
