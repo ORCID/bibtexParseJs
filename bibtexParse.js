@@ -1,4 +1,4 @@
-/* start bibtexParse 0.0.3 */
+/* start bibtexParse 0.0.4 */
 
 // Original work by Henrik Muehe (c) 2010
 //
@@ -118,7 +118,7 @@
                     }
                 } else if (this.input[this.pos] == '{') {
                     bracecount++;
-                } else if (this.pos == this.input.length - 1) {
+                } else if (this.pos >= this.input.length - 1) {
                     throw "Unterminated value";
                 }
                 this.pos++;
@@ -132,7 +132,7 @@
                 str = str + this.input[this.pos];
                 if (this.input[this.pos] == '{') brcktCnt++;
                 if (this.input[this.pos] == '}') brcktCnt--;
-                if (this.pos == this.input.length - 1) {
+                if (this.pos >= this.input.length - 1) {
                     throw "Unterminated value:" + this.input.substring(start);
                 }
                 this.pos++;
@@ -148,7 +148,7 @@
                     var end = this.pos;
                     this.match('"');
                     return this.input.substring(start, end);
-                } else if (this.pos == this.input.length - 1) {
+                } else if (this.pos >= this.input.length - 1) {
                     throw "Unterminated value:" + this.input.substring(start);
                 }
                 this.pos++;
@@ -186,7 +186,7 @@
         this.key = function () {
             var start = this.pos;
             while (true) {
-                if (this.pos == this.input.length) {
+                if (this.pos >= this.input.length) {
                     throw "Runaway key";
                 }
 
