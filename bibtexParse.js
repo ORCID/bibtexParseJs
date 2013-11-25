@@ -1,26 +1,26 @@
 /* start bibtexParse 0.0.5 */
 
-// Original work by Henrik Muehe (c) 2010
+//Original work by Henrik Muehe (c) 2010
 //
-// CommonJS port by Mikola Lysenko 2013
+//CommonJS port by Mikola Lysenko 2013
 //
-// Port to Browser lib by ORCID / RCPETERS
+//Port to Browser lib by ORCID / RCPETERS
 //
-// Issues:
-//  no comment handling within strings
-//  no string concatenation
-//  no variable values yet
-// Grammar implemented here:
-//  bibtex -> (string | preamble | comment | entry)*;
-//  string -> '@STRING' '{' key_equals_value '}';
-//  preamble -> '@PREAMBLE' '{' value '}';
-//  comment -> '@COMMENT' '{' value '}';
-//  entry -> '@' key '{' key ',' key_value_list '}';
-//  key_value_list -> key_equals_value (',' key_equals_value)*;
-//  key_equals_value -> key '=' value;
-//  value -> value_quotes | value_braces | key;
-//  value_quotes -> '"' .*? '"'; // not quite
-//  value_braces -> '{' .*? '"'; // not quite
+//Issues:
+//no comment handling within strings
+//no string concatenation
+//no variable values yet
+//Grammar implemented here:
+//bibtex -> (string | preamble | comment | entry)*;
+//string -> '@STRING' '{' key_equals_value '}';
+//preamble -> '@PREAMBLE' '{' value '}';
+//comment -> '@COMMENT' '{' value '}';
+//entry -> '@' key '{' key ',' key_value_list '}';
+//key_value_list -> key_equals_value (',' key_equals_value)*;
+//key_equals_value -> key '=' value;
+//value -> value_quotes | value_braces | key;
+//value_quotes -> '"' .*? '"'; // not quite
+//value_braces -> '{' .*? '"'; // not quite
 (function(exports) {
 
 	function BibtexParser() {
@@ -194,7 +194,7 @@
 				};
 
 				if (this.input[this.pos].match("[a-zA-Z0-9+_:\\./-]")) {
-					this.pos++
+					this.pos++;
 				} else {
 					return this.input.substring(start, this.pos).toUpperCase();
 				};
@@ -287,7 +287,7 @@
 		var b = new BibtexParser();
 		b.setInput(input);
 		b.bibtex();
-		return b.entries
+		return b.entries;
 	};
 
 })(typeof exports === 'undefined' ? this['bibtexParse'] = {} : exports);
