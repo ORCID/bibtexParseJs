@@ -166,7 +166,7 @@
 				return this.value_quotes();
 			} else {
 				var k = this.key();
-				if (this.strings[k.toUpperCase()]) {
+				if (this.strings[k]) {
 					return this.strings[k];
 				} else if (k.match("^[0-9]+$")) {
 					return k;
@@ -196,7 +196,7 @@
 				if (this.input[this.pos].match("[a-zA-Z0-9+_:\\./-]")) {
 					this.pos++;
 				} else {
-					return this.input.substring(start, this.pos).toUpperCase();
+					return this.input.substring(start, this.pos);
 				};
 			};
 		};
@@ -244,7 +244,7 @@
 
 		this.string = function() {
 			var kv = this.key_equals_value();
-			this.strings[kv[0].toUpperCase()] = kv[1];
+			this.strings[kv[0]] = kv[1];
 		};
 
 		this.preamble = function() {
@@ -267,7 +267,7 @@
 
 		this.bibtex = function() {
 			while (this.matchAt()) {
-				var d = this.directive().toUpperCase();
+				var d = this.directive();
 				this.match("{");
 				if (d == "@STRING") {
 					this.string();
