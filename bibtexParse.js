@@ -1,4 +1,4 @@
-/* start bibtexParse 0.0.7 */
+/* start bibtexParse 0.0.8 */
 
 //Original work by Henrik Muehe (c) 2010
 //
@@ -283,11 +283,38 @@
 		};
 	};
 
-	exports.toJSON = function(input) {
+	exports.toJSON = function(bibtex) {
 		var b = new BibtexParser();
-		b.setInput(input);
+		b.setInput(bibtex);
 		b.bibtex();
 		return b.entries;
+	};
+	
+	/* added during hackathon don't hate on me */
+	exports.toBibtex = function(json) {
+       out = '';
+       for (var i in json) {
+	      out += "@" + json[i].entryType;
+	      out += '{';
+	      if (json[i].citationKey)
+	         out += json[i].citationKey + ', ';
+	      if (json[i].entry) 
+	         if (json[i].entry.indexOf('{') > 0)
+	            out+= '"' + json[i].entry + '"'; 
+	         else
+	            out+= json[i].entry; 
+	      if (json[i].entryTags) {
+             var tags = '';
+             for (jdx in json[i].entryTags) {
+                if (tags.length != 0) tags += ', ';
+	            tags += jdx + '= {' + json[i].entryTags[jdx]+'}';
+	         }
+	         out += tags;
+	      }
+	      out += '}\n\n';
+	   }
+       return out;
+       
 	};
 
 })(typeof exports === 'undefined' ? this['bibtexParse'] = {} : exports);

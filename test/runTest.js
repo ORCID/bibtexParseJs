@@ -14,6 +14,11 @@ goodFiles.forEach(function (file) {
     var bibTexJson = bibtexParse.toJSON(bibTexStr);
     console.log(bibTexJson);
     assert(Object.keys(bibTexJson).length > 0);
+
+    assert(Object.keys(bibTexJson).length > 0);
+    var bibTexJson2 = bibtexParse.toJSON(bibtexParse.toBibtex(bibTexJson));
+    assert.equal(JSON.stringify(bibTexJson),JSON.stringify(bibTexJson2));
+
     console.log();
     console.log();
 });
