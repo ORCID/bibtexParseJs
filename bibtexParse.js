@@ -1,4 +1,4 @@
-/* start bibtexParse 0.0.8 */
+/* start bibtexParse 0.0.9 */
 
 //Original work by Henrik Muehe (c) 2010
 //
@@ -57,25 +57,29 @@
 			return (s == ' ' || s == '\r' || s == '\t' || s == '\n');
 		};
 
-		this.match = function(s) {
-			this.skipWhitespace();
+		this.match = function(s, canCommentOut) {
+                        if (canCommentOut == undefined || canCommentOut == null)
+                            canCommentOut = true;
+			this.skipWhitespace(canCommentOut);
 			if (this.input.substring(this.pos, this.pos + s.length) == s) {
 				this.pos += s.length;
 			} else {
 				throw "Token mismatch, expected " + s + ", found "
 						+ this.input.substring(this.pos);
 			};
-			this.skipWhitespace();
+			this.skipWhitespace(canCommentOut);
 		};
 
-		this.tryMatch = function(s) {
-			this.skipWhitespace();
+		this.tryMatch = function(s, canCommentOut) {
+                        if (canCommentOut == undefined || canCommentOut == null)
+                            canComment = true;
+			this.skipWhitespace(canCommentOut);
 			if (this.input.substring(this.pos, this.pos + s.length) == s) {
 				return true;
 			} else {
 				return false;
 			};
-			this.skipWhitespace();
+			this.skipWhitespace(canCommentOut);
 		};
 
 		/* when search for a match all text can be ignored, not just white space */
@@ -90,21 +94,21 @@
 			return false;
 		};
 
-		this.skipWhitespace = function() {
+		this.skipWhitespace = function(canCommentOut) {
 			while (this.isWhitespace(this.input[this.pos])) {
 				this.pos++;
 			};
-			if (this.input[this.pos] == "%") {
+			if (this.input[this.pos] == "%" && canCommentOut == true) {
 				while (this.input[this.pos] != "\n") {
 					this.pos++;
 				};
-				this.skipWhitespace();
+				this.skipWhitespace(canCommentOut);
 			};
 		};
 
 		this.value_braces = function() {
 			var bracecount = 0;
-			this.match("{");
+			this.match("{", false);
 			var start = this.pos;
 			while (true) {
 				if (this.input[this.pos] == '}'
@@ -113,7 +117,7 @@
 						bracecount--;
 					} else {
 						var end = this.pos;
-						this.match("}");
+						this.match("}", false);
 						return this.input.substring(start, end);
 					};
 				} else if (this.input[this.pos] == '{') {
@@ -128,7 +132,7 @@
 		this.value_comment = function() {
 			var str = '';
 			var brcktCnt = 0;
-			while (!(this.tryMatch("}") && brcktCnt == 0)) {
+			while (!(this.tryMatch("}",false) && brcktCnt == 0)) {
 				str = str + this.input[this.pos];
 				if (this.input[this.pos] == '{')
 					brcktCnt++;
@@ -143,13 +147,13 @@
 		};
 
 		this.value_quotes = function() {
-			this.match('"');
+			this.match('"', false);
 			var start = this.pos;
 			while (true) {
 				if (this.input[this.pos] == '"'
 						&& this.input[this.pos - 1] != '\\') {
 					var end = this.pos;
-					this.match('"');
+					this.match('"', false);
 					return this.input.substring(start, end);
 				} else if (this.pos >= this.input.length - 1) {
 					throw "Unterminated value:" + this.input.substring(start);
