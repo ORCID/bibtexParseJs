@@ -26,7 +26,7 @@
 	function BibtexParser() {
 		this.pos = 0;
 		this.input = "";
-                this.entries = new Array();
+		this.entries = new Array();
 
 		this.currentEntry = "";
 
@@ -43,8 +43,8 @@
 		};
 
 		this.match = function(s, canCommentOut) {
-                        if (canCommentOut == undefined || canCommentOut == null)
-                            canCommentOut = true;
+			if (canCommentOut == undefined || canCommentOut == null)
+				canCommentOut = true;
 			this.skipWhitespace(canCommentOut);
 			if (this.input.substring(this.pos, this.pos + s.length) == s) {
 				this.pos += s.length;
@@ -56,8 +56,8 @@
 		};
 
 		this.tryMatch = function(s, canCommentOut) {
-                        if (canCommentOut == undefined || canCommentOut == null)
-                            canComment = true;
+			if (canCommentOut == undefined || canCommentOut == null)
+				canComment = true;
 			this.skipWhitespace(canCommentOut);
 			if (this.input.substring(this.pos, this.pos + s.length) == s) {
 				return true;
@@ -117,7 +117,7 @@
 		this.value_comment = function() {
 			var str = '';
 			var brcktCnt = 0;
-			while (!(this.tryMatch("}",false) && brcktCnt == 0)) {
+			while (!(this.tryMatch("}", false) && brcktCnt == 0)) {
 				str = str + this.input[this.pos];
 				if (this.input[this.pos] == '{')
 					brcktCnt++;
@@ -178,7 +178,8 @@
 			while (true) {
 				if (this.pos >= this.input.length) {
 					throw "Runaway key";
-				};
+				}
+				;
 
 				if (this.input[this.pos].match("[a-zA-Z0-9+_:\\./-]")) {
 					this.pos++;
@@ -209,7 +210,8 @@
 				// fixes problems with commas at the end of a list
 				if (this.tryMatch("}")) {
 					break;
-				};
+				}
+				;
 				kv = this.key_equals_value();
 				this.currentEntry['entryTags'][kv[0]] = kv[1];
 			};
@@ -264,39 +266,39 @@
 			};
 		};
 	};
-
+	
 	exports.toJSON = function(bibtex) {
 		var b = new BibtexParser();
 		b.setInput(bibtex);
 		b.bibtex();
 		return b.entries;
 	};
-	
+
 	/* added during hackathon don't hate on me */
 	exports.toBibtex = function(json) {
-        out = '';
-        for (var i in json) {
-	      out += "@" + json[i].entryType;
-	      out += '{';
-	      if (json[i].citationKey)
-	         out += json[i].citationKey + ', ';
-	      if (json[i].entry) 
-	         if (json[i].entry.indexOf('{') > 0)
-	            out+= '"' + json[i].entry + '"'; 
-	         else
-	            out+= json[i].entry; 
-	      if (json[i].entryTags) {
-             var tags = '';
-             for (jdx in json[i].entryTags) {
-                if (tags.length != 0) tags += ', ';
-	            tags += jdx + '= {' + json[i].entryTags[jdx]+'}';
-	         }
-	         out += tags;
-	      }
-	      out += '}\n\n';
-	   }
-        return out;
-       
+		out = '';
+		for ( var i in json) {
+			out += "@" + json[i].entryType;
+			out += '{';
+			if (json[i].citationKey)
+				out += json[i].citationKey + ', ';
+			if (json[i].entry)
+				if (json[i].entry.indexOf('{') > 0)
+					out += '"' + json[i].entry + '"';
+				else
+					out += json[i].entry;
+			if (json[i].entryTags) {
+				var tags = '';
+				for (jdx in json[i].entryTags) {
+					if (tags.length != 0)
+						tags += ', ';
+					tags += jdx + '= {' + json[i].entryTags[jdx] + '}';
+				}
+				out += tags;
+			}
+			out += '}\n\n';
+		}
+		return out;
 	};
 
 })(typeof exports === 'undefined' ? this['bibtexParse'] = {} : exports);
