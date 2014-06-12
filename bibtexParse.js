@@ -26,22 +26,7 @@
 	function BibtexParser() {
 		this.pos = 0;
 		this.input = "";
-
-		this.entries = new Array();
-		this.strings = {
-			JAN : "January",
-			FEB : "February",
-			MAR : "March",
-			APR : "April",
-			MAY : "May",
-			JUN : "June",
-			JUL : "July",
-			AUG : "August",
-			SEP : "September",
-			OCT : "October",
-			NOV : "November",
-			DEC : "December"
-		};
+                this.entries = new Array();
 
 		this.currentEntry = "";
 
@@ -170,9 +155,7 @@
 				return this.value_quotes();
 			} else {
 				var k = this.key();
-				if (this.strings[k]) {
-					return this.strings[k];
-				} else if (k.match("^[0-9]+$")) {
+				if (k.match("^[0-9]+$")) {
 					return k;
 				} else {
 					throw "Value expected:" + this.input.substring(start);
@@ -246,11 +229,6 @@
 			return "@" + this.key();
 		};
 
-		this.string = function() {
-			var kv = this.key_equals_value();
-			this.strings[kv[0]] = kv[1];
-		};
-
 		this.preamble = function() {
 			this.currentEntry = {};
 			this.currentEntry['entryType'] = 'PREAMBLE';
@@ -296,8 +274,8 @@
 	
 	/* added during hackathon don't hate on me */
 	exports.toBibtex = function(json) {
-       out = '';
-       for (var i in json) {
+        out = '';
+        for (var i in json) {
 	      out += "@" + json[i].entryType;
 	      out += '{';
 	      if (json[i].citationKey)
@@ -317,7 +295,7 @@
 	      }
 	      out += '}\n\n';
 	   }
-       return out;
+        return out;
        
 	};
 
