@@ -24,6 +24,7 @@
 (function(exports) {
 
 	function BibtexParser() {
+		
 		this.pos = 0;
 		this.input = "";
 		this.entries = new Array();
@@ -170,7 +171,7 @@
 				this.match("#");
 				values.push(this.single_value());
 			};
-			return values.join("");
+			return latexToUTF8.decodeLatex(values.join(""));
 		};
 
 		this.key = function() {
@@ -267,6 +268,161 @@
 		};
 	};
 	
+	function LatexToUTF8 () {
+	   this.uniToLatex = {
+				"\u00c0": "\\`A",  // begin grave
+				"\u00c8": "\\`E",
+				"\u00cc": "\\`I",
+				"\u00d2": "\\`O",
+				"\u00d9": "\\`U",
+				"\u00e0": "\\`a",
+				"\u00e8": "\\`e",
+				"\u00ec": "\\`i",
+				"\u00f2": "\\`o",
+				"\u00f9": "\\`u",
+				"\u00c1": "\\'A", // begin acute
+				"\u00c9": "\\'E",
+				"\u00cd": "\\'I",
+				"\u00d3": "\\'O",
+				"\u00da": "\\'U",
+				"\u00dd": "\\'Y",
+				"\u00e1": "\\'a",
+				"\u00e9": "\\'e",
+				"\u00ed": "\\'i",
+				"\u00f3": "\\'o",
+				"\u00fa": "\\'u",
+				"\u00fd": "\\'y",
+				"\u00c4": "\\\",A", // begin diaeresis
+				"\u00cb": "\\\",E",
+				"\u00cf": "\\\",I",
+				"\u00d6": "\\\",O",
+				"\u00dc": "\\\",U",
+				"\u00e4": "\\\",a",
+				"\u00eb": "\\\",e",
+				"\u00ef": "\\\",i",
+				"\u00f6": "\\\",o",
+				"\u00fc": "\\\",u",
+				"\u00c3": "\\~A", // begin tilde
+				"\u00d1": "\\~N",
+				"\u00d5": "\\~O",
+				"\u00e3": "\\~a",
+				"\u00f1": "\\~n",
+				"\u00f5": "\\~o",
+				"\u016e": "\\rU", // begin ring above
+				"\u016f": "\\ru",
+				"\u010c": "\\vC", // begin caron
+				"\u010e": "\\vD",
+				"\u011a": "\\vE",
+				"\u0147": "\\vN",
+				"\u0158": "\\vR",
+				"\u0160": "\\vS",
+				"\u0164": "\\vT",
+				"\u017d": "\\vZ",
+				"\u010d": "\\vc",
+				"\u010f": "\\vd",
+				"\u011b": "\\ve",
+				"\u0148": "\\vn",
+				"\u0159": "\\vr",
+				"\u0161": "\\vs",
+				"\u0165": "\\vt",
+				"\u017e": "\\vz",
+				"\#": "\\#", // begin special symbols
+				"\$": "\\$",
+				"\%": "\\%",
+				"\&": "\\&",
+				"\\": "\\\\",
+				"\^": "\\^",
+				"//\_": "\\_", // disabled
+				"\{": "\\{",
+				"\}": "\\}",
+				"\~": "\\~",
+				"\u2019": "'", // closing single quote
+				"\u2018": "`", // opening single quote
+				"\u00c5": "\\AA", // begin non-ASCII letters
+				"\u00c6": "\\AE",
+				"\u00d8": "\\O",
+				"\u00e5": "\\aa",
+				"\u00e6": "\\ae",
+				"\u00f8": "\\o",
+				"\u00df": "\\ss",
+				"\u00a9": "\\textcopyright",
+				"\u2026": "\\textellipsis",
+				"\u2014": "\\textemdash",
+				"\u2013": "\\textendash",
+				"\u00ae": "\\textregistered",
+				"\u2122": "\\texttrademark",
+				"\u03b1": "\\alpha", // begin greek alphabet
+				"\u03b2": "\\beta",
+				"\u03b3": "\\gamma",
+				"\u03b4": "\\delta",
+				"\u03b5": "\\epsilon",
+				"\u03b6": "\\zeta",
+				"\u03b7": "\\eta",
+				"\u03b8": "\\theta",
+				"\u03b9": "\\iota",
+				"\u03ba": "\\kappa",
+				"\u03bb": "\\lambda",
+				"\u03bc": "\\mu",
+				"\u03bd": "\\nu",
+				"\u03be": "\\xi",
+				"\u03bf": "\\omicron",
+				"\u03c0": "\\pi",
+				"\u03c1": "\\rho",
+				"\u03c2": "\\sigma",
+				"\u03c3": "\\tau",
+				"\u03c4": "\\upsilon",
+				"\u03c5": "\\phi",
+				"\u03c6": "\\chi",
+				"\u03c7": "\\psi",
+				"\u03c8": "\\omega"
+		};
+		
+		
+		this.latexToUni = {};
+		
+		for (var idx in this.uniToLatex) {
+		   if (this.uniToLatex[idx].length > this.maxLatexLength) 
+		      this.maxLatexLength =  this.uniToLatex[idx].length;
+		    this.latexToUni[this.uniToLatex[idx]] = idx;
+		}
+
+		this.latexFindReplace = function(value, pos) {
+		    var subStringEnd =  pos + this.maxLatexLength <= value.length ? 
+		       pos + this.maxLatexLength :value.length;
+		    var subStr =  value.substring(pos,subStringEnd);
+		    while (subStr.length > 0) {
+		        if (subStr in this.latexToUni) {
+		            return  value.substring(0,pos) 
+		                + this.latexToUni[subStr] 
+		                + value.substring(pos + subStr.length, value.length);
+		        }
+		        subStr = subStr.substring(0,subStr.length -1);
+		    }
+		    return value;
+		}
+		
+		this.decodeLatex = function(value) {
+		   var lastOccur = 0;
+		   var pos = value.indexOf('\\',lastOccur);
+		   while (pos != -1 ) {
+		      lastOccur = pos;
+		      value = this.latexFindReplace(value,pos);
+		      pos = value.indexOf('\\',lastOccur+1);  
+		   }
+		   return value;
+		}
+
+		this.encodeLatex = function(value) {
+		   for (var idx in value) 
+		        if (value.charAt(idx) in  this.uniToLatex)
+		            value = value.substr(0, idx) + value.charAt(idx) + value.substr(idx+1)
+		   return value;
+		}
+		
+	};
+	
+	var latexToUTF8 = new LatexToUTF8();
+	
 	exports.toJSON = function(bibtex) {
 		var b = new BibtexParser();
 		b.setInput(bibtex);
@@ -292,7 +448,7 @@
 				for (jdx in json[i].entryTags) {
 					if (tags.length != 0)
 						tags += ', ';
-					tags += jdx + '= {' + json[i].entryTags[jdx] + '}';
+					tags += jdx + '= {' + latexToUTF8.encodeLatex(json[i].entryTags[jdx]) + '}';
 				}
 				out += tags;
 			}
