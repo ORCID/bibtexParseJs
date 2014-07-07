@@ -413,9 +413,12 @@
 		}
 
 		this.encodeLatex = function(value) {
+		   var trans = '';
 		   for (var idx in value) 
-		        if (value.charAt(idx) in  this.uniToLatex)
-		            value = value.substr(0, idx) + value.charAt(idx) + value.substr(idx+1)
+		        if (value.charAt(idx) in this.uniToLatex)
+		            trans += this.uniToLatex[value.charAt(idx)];
+		        else 
+		           trans += value.charAt(idx);
 		   return value;
 		}
 		
@@ -454,7 +457,9 @@
 			}
 			out += '}\n\n';
 		}
+		console.log(out);
 		return out;
+		
 	};
 
 })(typeof exports === 'undefined' ? this['bibtexParse'] = {} : exports);
