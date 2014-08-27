@@ -1,4 +1,4 @@
-/* start bibtexParse 0.0.12 */
+/* start bibtexParse 0.0.13 */
 
 //Original work by Henrik Muehe (c) 2010
 //
@@ -309,11 +309,13 @@
        "\'u": "ú",
        "\'y": "ý",
        "\"A": "Ä", // begin diaeresis
+       "r A": "Å", 
        "\"E": "Ë",
        "\"I": "Ï",
        "\"O": "Ö",
        "\"U": "Ü",
        "\"a": "ä",
+       "r a": "å",
        "\"e": "ë",
        "\"i": "ï",
        "\"o": "ö",
@@ -357,8 +359,10 @@
        "`": "‘", // opening single quote
        "AA": "Å", // begin non-ASCII letters
        "AE": "Æ",
+       "c{C}": "Ç",
        "O": "Ø",
        "aa": "å",
+       "c{c}": "ç",
        "ae": "æ",
        "o": "ø",
        "ss": "ß",
