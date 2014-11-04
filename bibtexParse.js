@@ -99,25 +99,25 @@
 			var start = this.pos;
 			var escaped = false;
 			while (true) {
-			    if (!escaped) {
-				    if (this.input[this.pos] == '}') {
-					    if (bracecount > 0) {
-						    bracecount--;
-					    } else {
-						    var end = this.pos;
-						    this.match("}", false);
-						    return this.input.substring(start, end);
-					    };
-				    } else if (this.input[this.pos] == '{') {
-					    bracecount++;
-				    } else if (this.pos >= this.input.length - 1) {
-					    throw "Unterminated value";
-				    };
+				if (!escaped) {
+					if (this.input[this.pos] == '}') {
+						if (bracecount > 0) {
+							bracecount--;
+						} else {
+							var end = this.pos;
+							this.match("}", false);
+							return this.input.substring(start, end);
+						};
+					} else if (this.input[this.pos] == '{') {
+						bracecount++;
+					} else if (this.pos >= this.input.length - 1) {
+						throw "Unterminated value";
+					};
 				};
-			    if (this.input[this.pos] == '\\' && escaped == false) 
-			       escaped == true;
-			    else 
-			       escaped == false;
+				if (this.input[this.pos] == '\\' && escaped == false)
+					escaped == true;
+				else
+					escaped == false;
 				this.pos++;
 			};
 		};
@@ -144,19 +144,19 @@
 			var start = this.pos;
 			var escaped = false;
 			while (true) {
-			    if (!escaped) {
-				    if (this.input[this.pos] == '"') {
-					    var end = this.pos;
-					    this.match('"', false);
-					    return this.input.substring(start, end);
-				    } else if (this.pos >= this.input.length - 1) {
-					    throw "Unterminated value:" + this.input.substring(start);
-				    };
+				if (!escaped) {
+					if (this.input[this.pos] == '"') {
+						var end = this.pos;
+						this.match('"', false);
+						return this.input.substring(start, end);
+					} else if (this.pos >= this.input.length - 1) {
+						throw "Unterminated value:" + this.input.substring(start);
+					};
 				}
-			    if (this.input[this.pos] == '\\' && escaped == false) 
-			       escaped == true;
-			    else 
-			       escaped == false;
+				if (this.input[this.pos] == '\\' && escaped == false)
+					escaped == true;
+				else
+					escaped == false;
 				this.pos++;
 			};
 		};
@@ -171,8 +171,8 @@
 				var k = this.key();
 				if (k.match("^[0-9]+$"))
 					return k;
-				else if (this.months.indexOf(k)) 
-					return k; 
+				else if (this.months.indexOf(k))
+					return k;
 				else
 					throw "Value expected:" + this.input.substring(start) + ' for key: ' + k;
 			
@@ -283,297 +283,297 @@
 	};
 	
 	function LatexToUTF8 () {
-	   this.uniToLatex = {
+		this.uniToLatex = {
 		};
 		
 		
 		this.latexToUni = {
-       "`A": "À", // begin grave
-       "`E": "È",
-       "`I": "Ì",
-       "`O": "Ò",
-       "`U": "Ù",
-       "`a": "à",
-       "`e": "è",
-       "`i": "ì",
-       "`o": "ò",
-       "`u": "ù",
-       "\'A": "Á", // begin acute
-       "\'E": "É",
-       "\'I": "Í",
-       "\'O": "Ó",
-       "\'U": "Ú",
-       "\'Y": "Ý",
-       "\'a": "á",
-       "\'e": "é",
-       "\'i": "í",
-       "\'o": "ó",
-       "\'u": "ú",
-       "\'y": "ý",
-       "\"A": "Ä", // begin diaeresis
-       "r A": "Å", 
-       "\"E": "Ë",
-       "\"I": "Ï",
-       "\"O": "Ö",
-       "\"U": "Ü",
-       "\"a": "ä",
-       "r a": "å",
-       "\"e": "ë",
-       "\"i": "ï",
-       "\"o": "ö",
-       "\"u": "ü",
-       "~A": "Ã", // begin tilde
-       "~N": "Ñ",
-       "~O": "Õ",
-       "~a": "ã",
-       "~n": "ñ",
-       "~o": "õ",
-       "rU": "Ů", // begin ring above
-       "ru": "ů",
-       "vC": "Č",  // begin caron
-       "vD": "Ď",
-       "vE": "Ě",
-       "vN": "Ň",
-       "vR": "Ř",
-       "vS": "Š",
-       "vT": "Ť",
-       "vZ": "Ž",
-       "vc": "č",
-       "vd": "ď",
-       "ve": "ě",
-       "vn": "ň",
-       "vr": "ř",
-       "vs": "š",
-       "vt": "ť",
-       "vz": "ž",
-       "#": "#",  // begin special symbols
-       "$": "$",
-       "%": "%",
-       "&": "&",
-       "\\": "\\",
-       "^": "^",
-       "_": "_",
-       "{": "{",
-       "}": "}",
-       "~": "~",
-       "\"": "\"",
-       "\'": "’", // closing single quote
-       "`": "‘", // opening single quote
-       "AA": "Å", // begin non-ASCII letters
-       "AE": "Æ",
-       "c{C}": "Ç",
-       "O": "Ø",
-       "aa": "å",
-       "c{c}": "ç",
-       "ae": "æ",
-       "o": "ø",
-       "ss": "ß",
-       "textcopyright": "©",
-       "textellipsis": "…" ,
-       "textemdash": "—",
-       "textendash": "–",
-       "textregistered": "®",
-       "texttrademark": "™",
-       "alpha": "α", // begin greek alphabet
-       "beta": "β",
-       "gamma": "γ",
-       "delta": "δ",
-       "epsilon": "ε",
-       "zeta": "ζ",
-       "eta": "η",
-       "theta": "θ",
-       "iota": "ι",
-       "kappa": "κ",
-       "lambda": "λ",
-       "mu": "μ",
-       "nu": "ν",
-       "xi": "ξ",
-       "omicron": "ο",
-       "pi": "π",
-       "rho": "ρ",
-       "sigma": "ς",
-       "tau": "σ",
-       "upsilon": "τ",
-       "phi": "υ",
-       "chi": "φ",
-       "psi": "χ",
-       "omega": "ψ",
-       "=A": "Ā",
-       "=a": "ā",
-       "u{A}": "Ă",
-       "u{a}": "ă",
-       "k A": "Ą",
-       "k a": "ą",
-       "'C": "Ć",
-       "'c": "ć",
-       "^C": "Ĉ",
-       "^c": "ĉ",
-       ".C": "Ċ",
-       ".c": "ċ",
-       "v{C}": "Č",
-       "v{c}": "č",
-       "v{D}": "Ď",
-       "=E": "Ē",
-       "=e": "ē",
-       "u{E}": "Ĕ",
-       "u{e}": "ĕ",
-       ".E": "Ė",
-       ".e": "ė",
-       "k E": "Ę",
-       "k e": "ę",
-       "v{E}": "Ě",
-       "v{e}": "ě",
-       "^G": "Ĝ",
-       "^g": "ĝ",
-       "u{G}": "Ğ",
-       "u{g}": "ğ",
-       ".G": "Ġ",
-       ".g": "ġ",
-       "c{G}": "Ģ",
-       "c{g}": "ģ",
-       "^H": "Ĥ",
-       "^h": "ĥ",
-       "dH": "Ħ",
-       "dh": "ħ",
-       "~I": "Ĩ",
-       "~i": "ĩ",
-       "=I": "Ī",
-       "=i": "ī",
-       "u{I}": "Ĭ",
-       "u{i}": "ĭ",
-       "k I": "Į",
-       "k i": "į",
-       ".I": "İ",
-       "^J": "Ĵ",
-       "^j": "ĵ",
-       "c{J}": "Ķ",
-       "c{j}": "ķ",
-       "'L": "Ĺ",
-       "'l": "ĺ",
-       "c{L}": "Ļ",
-       "c{l}": "ļ",
-       "v{L}": "Ľ",
-       "v{l}": "ľ",
-       "dL": "Ł",
-       "dl": "ł",
-       "'N": "Ń",
-       "'n": "ń",
-       "c{N}": "Ņ",
-       "c{n}": "ņ",
-       "v{N}": "Ň",
-       "v{n}": "ň",
-       "=O": "Ō",
-       "=o": "ō",
-       "u{O}": "Ŏ",
-       "u{o}": "ŏ",
-       "H{O}": "Ő",
-       "H{o}": "ő",
-       "OE": "Œ",
-       "oe": "œ",
-       "'R": "Ŕ",
-       "'r": "ŕ",
-       "c{R}": "Ŗ",
-       "c{r}": "ŗ",
-       "v{R}": "Ř",
-       "v{r}": "ř",
-       "'R": "Ś",
-       "'r": "ś",
-       "^S": "Ŝ",
-       "^s": "ŝ",
-       "c{S}": "Ş",
-       "c{s}": "ş",
-       "v{S}": "Š",
-       "v{s}": "š",
-       "c{T}": "Ţ",
-       "c{t}": "ţ",
-       "v{T}": "Ť",
-       "v{t}": "ť",
-       "dT": "Ŧ",
-       "dt": "ŧ",
-       "~U": "Ũ",
-       "~u": "ũ",
-       "=U": "Ū",
-       "=u": "ū",
-       "u{U}": "Ŭ",
-       "u{u}": "ŭ",
-       "r U": "Ů",
-       "r u": "ů",
-       "H{U}": "Ű",
-       "H{u}": "ű",
-       "k U": "Ų",
-       "k u": "ų",
-       "^W": "Ŵ",
-       "^w": "ŵ",
-       "^Y": "Ŷ",
-       "^y": "ŷ",
-       "\"Y": "Ÿ",
-       "'Z": "Ź",
-       "'z": "ź",
-       ".Z": "Ż",
-       ".z": "ż",
-       "v{Z}": "Ž",
-       "v{z}": "ž"
-    };
+		"`A": "À", // begin grave
+		"`E": "È",
+		"`I": "Ì",
+		"`O": "Ò",
+		"`U": "Ù",
+		"`a": "à",
+		"`e": "è",
+		"`i": "ì",
+		"`o": "ò",
+		"`u": "ù",
+		"\'A": "Á", // begin acute
+		"\'E": "É",
+		"\'I": "Í",
+		"\'O": "Ó",
+		"\'U": "Ú",
+		"\'Y": "Ý",
+		"\'a": "á",
+		"\'e": "é",
+		"\'i": "í",
+		"\'o": "ó",
+		"\'u": "ú",
+		"\'y": "ý",
+		"\"A": "Ä", // begin diaeresis
+		"r A": "Å",
+		"\"E": "Ë",
+		"\"I": "Ï",
+		"\"O": "Ö",
+		"\"U": "Ü",
+		"\"a": "ä",
+		"r a": "å",
+		"\"e": "ë",
+		"\"i": "ï",
+		"\"o": "ö",
+		"\"u": "ü",
+		"~A": "Ã", // begin tilde
+		"~N": "Ñ",
+		"~O": "Õ",
+		"~a": "ã",
+		"~n": "ñ",
+		"~o": "õ",
+		"rU": "Ů", // begin ring above
+		"ru": "ů",
+		"vC": "Č",  // begin caron
+		"vD": "Ď",
+		"vE": "Ě",
+		"vN": "Ň",
+		"vR": "Ř",
+		"vS": "Š",
+		"vT": "Ť",
+		"vZ": "Ž",
+		"vc": "č",
+		"vd": "ď",
+		"ve": "ě",
+		"vn": "ň",
+		"vr": "ř",
+		"vs": "š",
+		"vt": "ť",
+		"vz": "ž",
+		"#": "#",  // begin special symbols
+		"$": "$",
+		"%": "%",
+		"&": "&",
+		"\\": "\\",
+		"^": "^",
+		"_": "_",
+		"{": "{",
+		"}": "}",
+		"~": "~",
+		"\"": "\"",
+		"\'": "’", // closing single quote
+		"`": "‘", // opening single quote
+		"AA": "Å", // begin non-ASCII letters
+		"AE": "Æ",
+		"c{C}": "Ç",
+		"O": "Ø",
+		"aa": "å",
+		"c{c}": "ç",
+		"ae": "æ",
+		"o": "ø",
+		"ss": "ß",
+		"textcopyright": "©",
+		"textellipsis": "…" ,
+		"textemdash": "—",
+		"textendash": "–",
+		"textregistered": "®",
+		"texttrademark": "™",
+		"alpha": "α", // begin greek alphabet
+		"beta": "β",
+		"gamma": "γ",
+		"delta": "δ",
+		"epsilon": "ε",
+		"zeta": "ζ",
+		"eta": "η",
+		"theta": "θ",
+		"iota": "ι",
+		"kappa": "κ",
+		"lambda": "λ",
+		"mu": "μ",
+		"nu": "ν",
+		"xi": "ξ",
+		"omicron": "ο",
+		"pi": "π",
+		"rho": "ρ",
+		"sigma": "ς",
+		"tau": "σ",
+		"upsilon": "τ",
+		"phi": "υ",
+		"chi": "φ",
+		"psi": "χ",
+		"omega": "ψ",
+		"=A": "Ā",
+		"=a": "ā",
+		"u{A}": "Ă",
+		"u{a}": "ă",
+		"k A": "Ą",
+		"k a": "ą",
+		"'C": "Ć",
+		"'c": "ć",
+		"^C": "Ĉ",
+		"^c": "ĉ",
+		".C": "Ċ",
+		".c": "ċ",
+		"v{C}": "Č",
+		"v{c}": "č",
+		"v{D}": "Ď",
+		"=E": "Ē",
+		"=e": "ē",
+		"u{E}": "Ĕ",
+		"u{e}": "ĕ",
+		".E": "Ė",
+		".e": "ė",
+		"k E": "Ę",
+		"k e": "ę",
+		"v{E}": "Ě",
+		"v{e}": "ě",
+		"^G": "Ĝ",
+		"^g": "ĝ",
+		"u{G}": "Ğ",
+		"u{g}": "ğ",
+		".G": "Ġ",
+		".g": "ġ",
+		"c{G}": "Ģ",
+		"c{g}": "ģ",
+		"^H": "Ĥ",
+		"^h": "ĥ",
+		"dH": "Ħ",
+		"dh": "ħ",
+		"~I": "Ĩ",
+		"~i": "ĩ",
+		"=I": "Ī",
+		"=i": "ī",
+		"u{I}": "Ĭ",
+		"u{i}": "ĭ",
+		"k I": "Į",
+		"k i": "į",
+		".I": "İ",
+		"^J": "Ĵ",
+		"^j": "ĵ",
+		"c{J}": "Ķ",
+		"c{j}": "ķ",
+		"'L": "Ĺ",
+		"'l": "ĺ",
+		"c{L}": "Ļ",
+		"c{l}": "ļ",
+		"v{L}": "Ľ",
+		"v{l}": "ľ",
+		"dL": "Ł",
+		"dl": "ł",
+		"'N": "Ń",
+		"'n": "ń",
+		"c{N}": "Ņ",
+		"c{n}": "ņ",
+		"v{N}": "Ň",
+		"v{n}": "ň",
+		"=O": "Ō",
+		"=o": "ō",
+		"u{O}": "Ŏ",
+		"u{o}": "ŏ",
+		"H{O}": "Ő",
+		"H{o}": "ő",
+		"OE": "Œ",
+		"oe": "œ",
+		"'R": "Ŕ",
+		"'r": "ŕ",
+		"c{R}": "Ŗ",
+		"c{r}": "ŗ",
+		"v{R}": "Ř",
+		"v{r}": "ř",
+		"'R": "Ś",
+		"'r": "ś",
+		"^S": "Ŝ",
+		"^s": "ŝ",
+		"c{S}": "Ş",
+		"c{s}": "ş",
+		"v{S}": "Š",
+		"v{s}": "š",
+		"c{T}": "Ţ",
+		"c{t}": "ţ",
+		"v{T}": "Ť",
+		"v{t}": "ť",
+		"dT": "Ŧ",
+		"dt": "ŧ",
+		"~U": "Ũ",
+		"~u": "ũ",
+		"=U": "Ū",
+		"=u": "ū",
+		"u{U}": "Ŭ",
+		"u{u}": "ŭ",
+		"r U": "Ů",
+		"r u": "ů",
+		"H{U}": "Ű",
+		"H{u}": "ű",
+		"k U": "Ų",
+		"k u": "ų",
+		"^W": "Ŵ",
+		"^w": "ŵ",
+		"^Y": "Ŷ",
+		"^y": "ŷ",
+		"\"Y": "Ÿ",
+		"'Z": "Ź",
+		"'z": "ź",
+		".Z": "Ż",
+		".z": "ż",
+		"v{Z}": "Ž",
+		"v{z}": "ž"
+	};
 
-       String.prototype.addSlashes = function() { 
-             //no need to do (str+'') anymore because 'this' can only be a string
-             return this.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
-       }
+		String.prototype.addSlashes = function() {
+			 //no need to do (str+'') anymore because 'this' can only be a string
+			 return this.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+		}
 
 		for (var idx in this.latexToUni) {
-		   if (this.latexToUni[idx].length > this.maxLatexLength) 
-		      this.maxLatexLength =  this.latexToUni[idx].length;
-		   this.uniToLatex[this.latexToUni[idx]] = idx;
-           //console.log('"'+ idx.addSlashes() + '": "' + this.latexToUni[idx].addSlashes() + '"');
-           //console.log(idx.addSlashes() + ' ' + this.latexToUni[idx].addSlashes());
+			if (this.latexToUni[idx].length > this.maxLatexLength)
+			  this.maxLatexLength =  this.latexToUni[idx].length;
+			this.uniToLatex[this.latexToUni[idx]] = idx;
+			//console.log('"'+ idx.addSlashes() + '": "' + this.latexToUni[idx].addSlashes() + '"');
+			//console.log(idx.addSlashes() + ' ' + this.latexToUni[idx].addSlashes());
 		}
 
 		this.longestEscapeMatch = function(value, pos) {
-           var subStringEnd =  pos + 1 + this.maxLatexLength <= value.length ? 
-		               pos + 1 + this.maxLatexLength : value.length;
-		   var subStr =  value.substring(pos + 1,subStringEnd);		            
-		   while (subStr.length > 0) {
-		     if (subStr in this.latexToUni) {
-                break;
-		     }
-		     subStr = subStr.substring(0,subStr.length -1);
-		   }
-		   return subStr;
+			var subStringEnd =  pos + 1 + this.maxLatexLength <= value.length ?
+						pos + 1 + this.maxLatexLength : value.length;
+			var subStr =  value.substring(pos + 1,subStringEnd);					
+			while (subStr.length > 0) {
+			 if (subStr in this.latexToUni) {
+				break;
+			 }
+			 subStr = subStr.substring(0,subStr.length -1);
+			}
+			return subStr;
 		}
 		
 		this.decodeLatex = function(value) {
-		   var newVal = '';
-		   var pos = 0;
-		   while (pos < value.length) {
-                if (value[pos] == '\\') {
-                    var match = this.longestEscapeMatch(value, pos);
-                    if (match.length > 0) {
-                       newVal += this.latexToUni[match];
-                       pos = pos + 1 + match.length;
-                    } else {
-                       newVal += value[pos];
-		               pos++;
-                    }
-               } else if (value[pos] == '{' || value[pos] == '}') {
-		          pos++;
-		        } else {
-		           newVal += value[pos];
-		           pos++;
-		        } 
-		   }
-		   return newVal;
+			var newVal = '';
+			var pos = 0;
+			while (pos < value.length) {
+				if (value[pos] == '\\') {
+					var match = this.longestEscapeMatch(value, pos);
+					if (match.length > 0) {
+						newVal += this.latexToUni[match];
+						pos = pos + 1 + match.length;
+					} else {
+						newVal += value[pos];
+						pos++;
+					}
+				} else if (value[pos] == '{' || value[pos] == '}') {
+				  pos++;
+				} else {
+					newVal += value[pos];
+					pos++;
+				}
+			}
+			return newVal;
 		}
 
 		this.encodeLatex = function(value) {
-		   var trans = '';
-		   for (var idx = 0; idx < value.length; ++idx) {
-		        var c = value.charAt(idx); 
-		        if (c in this.uniToLatex)
-		            trans += '\\' + this.uniToLatex[c];
-		        else 
-		           trans += c;
-		   }
-		   return trans;
+			var trans = '';
+			for (var idx = 0; idx < value.length; ++idx) {
+				var c = value.charAt(idx);
+				if (c in this.uniToLatex)
+					trans += '\\' + this.uniToLatex[c];
+				else
+					trans += c;
+			}
+			return trans;
 		}
 		
 	};
