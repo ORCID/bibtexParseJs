@@ -1,4 +1,4 @@
-/* start bibtexParse 0.0.17 */
+/* start bibtexParse 0.0.18 */
 
 //Original work by Henrik Muehe (c) 2010
 //
@@ -196,7 +196,7 @@
 					throw "Runaway key";
 				};
 
-				if (this.input[this.pos].match("[a-zA-Z0-9+_:\\./-]")) {
+				if (this.input[this.pos].match("[\\wа-яА-Я0-9+_:\\./-]")) {
 					this.pos++;
 				} else {
 					return this.input.substring(start, this.pos);
