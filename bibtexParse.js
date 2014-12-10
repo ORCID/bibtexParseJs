@@ -195,7 +195,7 @@
 				if (this.pos >= this.input.length) {
 					throw "Runaway key";
 				};
-
+                                // а-яА-Я is Cyrillic
 				if (this.input[this.pos].match("[\\wа-яА-Я0-9+_:\\./-]")) {
 					this.pos++;
 				} else {
