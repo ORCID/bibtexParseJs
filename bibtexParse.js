@@ -172,7 +172,7 @@
                 if (k.match("^[0-9]+$"))
                     return k;
                 else if (this.months.indexOf(k.toLowerCase()) >= 0)
-                    return k;
+                    return k.toLowerCase();
                 else
                     throw "Value expected:" + this.input.substring(start) + ' for key: ' + k;
             
