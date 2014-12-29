@@ -1,4 +1,4 @@
-/* start bibtexParse 0.0.18 */
+/* start bibtexParse 0.0.19 */
 
 //Original work by Henrik Muehe (c) 2010
 //
@@ -171,7 +171,7 @@
                 var k = this.key();
                 if (k.match("^[0-9]+$"))
                     return k;
-                else if (this.months.indexOf(k) >= 0)
+                else if (this.months.indexOf(k.toLowerCase()) >= 0)
                     return k;
                 else
                     throw "Value expected:" + this.input.substring(start) + ' for key: ' + k;
