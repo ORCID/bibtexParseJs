@@ -26,7 +26,7 @@
     function BibtexParser() {
         
         this.months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
-        this.notKey = [',',',','{','}',' ','='];
+        this.notKey = [',','{','}',' ','='];
         this.pos = 0;
         this.input = "";
         this.entries = new Array();
