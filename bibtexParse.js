@@ -1,4 +1,4 @@
-/* start bibtexParse 0.0.19 */
+/* start bibtexParse 0.0.20 */
 
 //Original work by Henrik Muehe (c) 2010
 //
@@ -196,7 +196,7 @@
                     throw "Runaway key";
                 };
                                 // а-яА-Я is Cyrillic
-                if (this.input[this.pos].match("[\\wа-яА-Я0-9+_:\\./-]")) {
+                if (this.input[this.pos].match("[\\wа-яА-ЯЀ-џ0-9+_:\\./-]")) {
                     this.pos++;
                 } else {
                     return this.input.substring(start, this.pos);
