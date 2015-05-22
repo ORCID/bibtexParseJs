@@ -26,6 +26,7 @@
     function BibtexParser() {
         
         this.months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+        this.notKey = [',',',','{','}',' ','='];
         this.pos = 0;
         this.input = "";
         this.entries = new Array();
@@ -196,10 +197,12 @@
                     throw "Runaway key";
                 };
                                 // а-яА-Я is Cyrillic
-                if (this.input[this.pos].match("[\\wа-яА-ЯЀ-џ0-9+_:\\./-]")) {
-                    this.pos++;
-                } else {
+                //console.log(this.input[this.pos]);
+                if (this.notKey.indexOf(this.input[this.pos]) >= 0) {
                     return this.input.substring(start, this.pos);
+                } else {
+                    this.pos++;
+                    
                 };
             };
         };
