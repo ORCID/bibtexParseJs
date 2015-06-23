@@ -61,5 +61,8 @@ for (var key in codeMap) {
   uniToLatix[codeMap[key]['char']] = key;
 }
 
-console.log("//")
+console.log("// Generated from http://www.w3.org/2003/entities/2007xml/unicode.xml");
+console.log("// Duplicate latex keys skipped (first choosen) ");
+console.log("// Duplicate latex keys not starting with backwardslash (\\) skipped");
+console.log("// Decimal Charcode with dashes (-) skipped ");
 console.log("var w3cLatexCharMap = " + JSON.stringify(latexToUni, false, 2));
