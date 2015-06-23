@@ -40,6 +40,8 @@ for (var i = 0; i < w3cJsonDoc.unicode.charlist[0].character.length; i++) {
             'description': cur.description[0]['_']
           }
         }
+      } else {
+        console.log("Duplicate latex code: " + latexCode);
       }
     }
   }
@@ -59,4 +61,5 @@ for (var key in codeMap) {
   uniToLatix[codeMap[key]['char']] = key;
 }
 
-console.log(JSON.stringify(latexToUni, false, 2));
+console.log("//")
+//console.log("var w3cLatexCharMap = " + JSON.stringify(latexToUni, false, 2));

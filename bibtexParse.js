@@ -286,11 +286,10 @@
     };
     
     function LatexToUTF8 () {
-        this.uniToLatex = {
+        this.orcidUniToLatex = {
         };
         
-        
-        this.latexToUni = {
+        this.orcidLatexToUni = {
         "\\`A": "À", // begin grave
         "\\`E": "È",
         "\\`I": "Ì",
@@ -517,19 +516,35 @@
         "\\v{Z}": "Ž",
         "\\v{z}": "ž"
     };
-
-        for (var idx in this.latexToUni) {
-            if (this.latexToUni[idx].length > this.maxLatexLength)
-              this.maxLatexLength =  this.latexToUni[idx].length;
-            this.uniToLatex[this.latexToUni[idx]] = idx;
+    
+        for (var idx in this.orcidLatexToUni) {
+            if (this.orcidLatexToUni[idx].length > this.maxLatexLength)
+              this.maxLatexLength =  this.orcidLatexToUni[idx].length;
+            this.orcidUniToLatex[this.orcidLatexToUni[idx]] = idx;
         }
+
+        this.getUni = function(latex) {
+            return this.orcidLatexToUni[latex];
+        };
+
+        this.hasLatexMatch = function (latex) {
+            return latex in this.orcidLatexToUni;
+        };
+
+        this.getLatex = function(uni) {
+            return this.orcidUniToLatex[uni];
+        };
+
+        this.hasUniMatch = function (uni) {
+            return uni in this.orcidUniToLatex;
+        };
 
         this.longestEscapeMatch = function(value, pos) {
             var subStringEnd =  pos + 1 + this.maxLatexLength <= value.length ?
                         pos + 1 + this.maxLatexLength : value.length;
             var subStr =  value.substring(pos,subStringEnd);                    
             while (subStr.length > 0) {
-             if (subStr in this.latexToUni) {
+             if (this.hasLatexMatch(subStr)) {
                 break;
              }
              subStr = subStr.substring(0,subStr.length -1);
@@ -544,7 +559,7 @@
                 if (value[pos] == '\\') {
                     var match = this.longestEscapeMatch(value, pos);
                     if (match.length > 0) {
-                        newVal += this.latexToUni[match];
+                        newVal += this.getUni(match);
                         pos = pos + match.length;
                     } else {
                         newVal += value[pos];
@@ -564,8 +579,8 @@
             var trans = '';
             for (var idx = 0; idx < value.length; ++idx) {
                 var c = value.charAt(idx);
-                if (c in this.uniToLatex)
-                    trans += this.uniToLatex[c];
+                if (this.hasUniMatch(c))
+                    trans += this.getLatex(c);
                 else
                     trans += c;
             }
