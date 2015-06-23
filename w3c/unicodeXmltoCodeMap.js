@@ -41,7 +41,7 @@ for (var i = 0; i < w3cJsonDoc.unicode.charlist[0].character.length; i++) {
           }
         }
       } else {
-        console.log("Duplicate latex code: " + latexCode);
+        //console.log("Duplicate latex code: " + latexCode);
       }
     }
   }
@@ -62,4 +62,4 @@ for (var key in codeMap) {
 }
 
 console.log("//")
-//console.log("var w3cLatexCharMap = " + JSON.stringify(latexToUni, false, 2));
+console.log("var w3cLatexCharMap = " + JSON.stringify(latexToUni, false, 2));

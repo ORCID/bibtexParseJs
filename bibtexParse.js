@@ -286,7 +286,7 @@
     };
     
     function LatexToUTF8 () {
-        this.orcidUniToLatex = {
+        this.orcidCharLatexMap = {
         };
         
         this.orcidLatexToUni = {
@@ -520,7 +520,7 @@
         for (var idx in this.orcidLatexToUni) {
             if (this.orcidLatexToUni[idx].length > this.maxLatexLength)
               this.maxLatexLength =  this.orcidLatexToUni[idx].length;
-            this.orcidUniToLatex[this.orcidLatexToUni[idx]] = idx;
+            this.orcidCharLatexMap[this.orcidLatexToUni[idx]] = idx;
         }
 
         this.getUni = function(latex) {
@@ -532,11 +532,11 @@
         };
 
         this.getLatex = function(uni) {
-            return this.orcidUniToLatex[uni];
+            return this.orcidCharLatexMap[uni];
         };
 
         this.hasUniMatch = function (uni) {
-            return uni in this.orcidUniToLatex;
+            return uni in this.orcidCharLatexMap;
         };
 
         this.longestEscapeMatch = function(value, pos) {
