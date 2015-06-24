@@ -17,6 +17,8 @@ goodFiles.forEach(function (file) {
 
     assert(Object.keys(bibTexJson).length > 0);
     var bibTexJson2 = bibtexParse.toJSON(bibtexParse.toBibtex(bibTexJson));
+//    console.log("json1: " + JSON.stringify(bibTexJson))
+//    console.log("json2: " + JSON.stringify(bibTexJson2)) 
     assert.equal(JSON.stringify(bibTexJson),JSON.stringify(bibTexJson2));
 
     console.log();
