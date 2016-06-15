@@ -34,6 +34,8 @@ console.log(sample);
    Contributions are welcome. Please make sure the unit test(test/runTest.js) reflects the
    changes and completes successfully. 
 
+#### Travis CI
+See the latest build and results at [https://travis-ci.org/ORCID/bibtexParseJs](https://travis-ci.org/ORCID/bibtexParseJs)
 
 ## Credits
 (c) 2010 Henrik Muehe.  MIT License 
@@ -43,5 +45,3 @@ console.log(sample);
 CommonJS port maintained by Mikola Lysenko 
 [visit](https://github.com/mikolalysenko/bibtex-parser)
 
-## Travis CI
-Testing travis - more to come
