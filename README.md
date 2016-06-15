@@ -42,3 +42,6 @@ console.log(sample);
 
 CommonJS port maintained by Mikola Lysenko 
 [visit](https://github.com/mikolalysenko/bibtex-parser)
+
+## Travis CI
+Testing travis - more to come
