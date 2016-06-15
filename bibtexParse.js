@@ -60,7 +60,7 @@
 
         this.tryMatch = function(s, canCommentOut) {
             if (canCommentOut == undefined || canCommentOut == null)
-                canComment = true;
+                canCommentOut = true;
             this.skipWhitespace(canCommentOut);
             if (this.input.substring(this.pos, this.pos + s.length) == s) {
                 return true;
@@ -116,9 +116,9 @@
                     };
                 };
                 if (this.input[this.pos] == '\\' && escaped == false)
-                    escaped == true;
+                    escaped = true;
                 else
-                    escaped == false;
+                    escaped = false;
                 this.pos++;
             };
         };
@@ -155,9 +155,9 @@
                     };
                 }
                 if (this.input[this.pos] == '\\' && escaped == false)
-                    escaped == true;
+                    escaped = true;
                 else
-                    escaped == false;
+                    escaped = false;
                 this.pos++;
             };
         };
@@ -294,7 +294,7 @@
 
     /* added during hackathon don't hate on me */
     exports.toBibtex = function(json) {
-        out = '';
+        var out = '';
         for ( var i in json) {
             out += "@" + json[i].entryType;
             out += '{';
@@ -304,7 +304,7 @@
                 out += json[i].entry ;
             if (json[i].entryTags) {
                 var tags = '';
-                for (jdx in json[i].entryTags) {
+                for (var jdx in json[i].entryTags) {
                     if (tags.length != 0)
                         tags += ', ';
                     tags += jdx + '= {' + json[i].entryTags[jdx] + '}';
