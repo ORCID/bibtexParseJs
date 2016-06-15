@@ -44,4 +44,3 @@ See the latest build and results at [https://travis-ci.org/ORCID/bibtexParseJs](
 
 CommonJS port maintained by Mikola Lysenko 
 [visit](https://github.com/mikolalysenko/bibtex-parser)
-
