@@ -190,7 +190,7 @@
             return values.join("");
         };
 
-        this.key = function() {
+        this.key = function(optional) {
             var start = this.pos;
             while (true) {
                 if (this.pos >= this.input.length) {
@@ -199,6 +199,10 @@
                                 // а-яА-Я is Cyrillic
                 //console.log(this.input[this.pos]);
                 if (this.notKey.indexOf(this.input[this.pos]) >= 0) {
+                    if (optional && this.input[this.pos] != ',') {
+                        this.pos = start;
+                        return null;
+                    };
                     return this.input.substring(start, this.pos);
                 } else {
                     this.pos++;
@@ -237,9 +241,11 @@
 
         this.entry_body = function(d) {
             this.currentEntry = {};
-            this.currentEntry['citationKey'] = this.key();
+            this.currentEntry['citationKey'] = this.key(true);
             this.currentEntry['entryType'] = d.substring(1);
-            this.match(",");
+            if (this.currentEntry['citationKey'] != null) {            
+                this.match(",");
+            }
             this.key_value_list();
             this.entries.push(this.currentEntry);
         };
@@ -267,6 +273,18 @@
             this.entry_body(d);
         };
 
+        this.alernativeCitationKey = function () {
+            this.entries.forEach(function (entry) {
+                if (!entry.citationKey && entry.entryTags) {
+                    entry.citationKey = '';
+                    if (entry.entryTags.author) {
+                        entry.citationKey += entry.entryTags.author.split(',')[0] += ', ';
+                    }
+                    entry.citationKey += entry.entryTags.year;
+                }
+            });
+        }
+
         this.bibtex = function() {
             while (this.matchAt()) {
                 var d = this.directive();
@@ -282,6 +300,8 @@
                 }
                 this.match("}");
             };
+
+            this.alernativeCitationKey();
         };
     };
     
