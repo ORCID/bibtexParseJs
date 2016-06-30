@@ -7,10 +7,11 @@
     "test": "test"
   },
   "dependencies": {
-    "xml2js":"*"
+    "ava": "^0.15.2",
+    "xml2js": "*"
   },
   "scripts": {
-    "test": "node test/runTest.js"
+    "test": "ava"
   },
   "repository": {
     "type": "git",
