@@ -293,7 +293,7 @@
                     this.string();
                 } else if (d == "@PREAMBLE") {
                     this.preamble();
-                } else if (d == "@COMMENT") {
+                } else if (d == "@COMMENT" || d == "@Comment") {
                     this.comment();
                 } else {
                     this.entry(d);
