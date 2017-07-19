@@ -24,7 +24,7 @@
 (function(exports) {
 
     function BibtexParser() {
-        
+
         this.months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
         this.notKey = [',','{','}',' ','='];
         this.pos = 0;
@@ -176,7 +176,7 @@
                     return k.toLowerCase();
                 else
                     throw "Value expected:" + this.input.substring(start) + ' for key: ' + k;
-            
+
             };
         };
 
@@ -206,7 +206,7 @@
                     return this.input.substring(start, this.pos);
                 } else {
                     this.pos++;
-                    
+
                 };
             };
         };
@@ -243,7 +243,7 @@
             this.currentEntry = {};
             this.currentEntry['citationKey'] = this.key(true);
             this.currentEntry['entryType'] = d.substring(1);
-            if (this.currentEntry['citationKey'] != null) {            
+            if (this.currentEntry['citationKey'] != null) {
                 this.match(",");
             }
             this.key_value_list();
@@ -289,11 +289,11 @@
             while (this.matchAt()) {
                 var d = this.directive();
                 this.match("{");
-                if (d == "@STRING") {
+                if (d.toUpperCase() == "@STRING") {
                     this.string();
-                } else if (d == "@PREAMBLE") {
+                } else if (d.toUpperCase() == "@PREAMBLE") {
                     this.preamble();
-                } else if (d == "@COMMENT" || d == "@Comment") {
+                } else if (d.toUpperCase() == "@COMMENT") {
                     this.comment();
                 } else {
                     this.entry(d);
@@ -304,7 +304,7 @@
             this.alernativeCitationKey();
         };
     };
-    
+
     exports.toJSON = function(bibtex) {
         var b = new BibtexParser();
         b.setInput(bibtex);
@@ -334,7 +334,7 @@
             out += '}\n\n';
         }
         return out;
-        
+
     };
 
 })(typeof exports === 'undefined' ? this['bibtexParse'] = {} : exports);
