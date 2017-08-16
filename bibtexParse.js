@@ -1,4 +1,4 @@
-/* start bibtexParse 0.0.22 */
+/* start bibtexParse 0.0.23 */
 
 //Original work by Henrik Muehe (c) 2010
 //
