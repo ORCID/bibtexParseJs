@@ -216,6 +216,7 @@
             if (this.tryMatch("=")) {
                 this.match("=");
                 var val = this.value();
+                key = key.trim()
                 return [ key, val ];
             } else {
                 throw "... = value expected, equals sign missing:"
