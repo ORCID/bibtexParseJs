@@ -320,19 +320,19 @@
             out += "@" + json[i].entryType;
             out += '{';
             if (json[i].citationKey)
-                out += json[i].citationKey + ', ';
+                out += json[i].citationKey + ',\n';
             if (json[i].entry)
                 out += json[i].entry ;
             if (json[i].entryTags) {
-                var tags = '';
+                var tags = '    ';
                 for (var jdx in json[i].entryTags) {
-                    if (tags.length != 0)
-                        tags += ', ';
-                    tags += jdx + '= {' + json[i].entryTags[jdx] + '}';
+                    if (tags.trim().length != 0)
+                        tags += ',\n    ';
+                    tags += jdx + ' = {' + json[i].entryTags[jdx] + '}';
                 }
                 out += tags;
             }
-            out += '}\n\n';
+            out += '\n}\n\n';
         }
         return out;
 
