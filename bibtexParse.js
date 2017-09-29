@@ -314,6 +314,8 @@
     };
 
     /* added during hackathon don't hate on me */
+    /* Increased the amount of white-space to make entries
+     * more attractive to humans */
     exports.toBibtex = function(json) {
         var out = '';
         for ( var i in json) {
