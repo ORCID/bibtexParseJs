@@ -52,8 +52,8 @@
             if (this.input.substring(this.pos, this.pos + s.length) == s) {
                 this.pos += s.length;
             } else {
-                throw "Token mismatch, expected " + s + ", found "
-                        + this.input.substring(this.pos);
+                throw TypeError("Token mismatch: match", "expected " + s + ", found "
+                        + this.input.substring(this.pos));
             };
             this.skipWhitespace(canCommentOut);
         };
@@ -112,7 +112,7 @@
                     } else if (this.input[this.pos] == '{') {
                         bracecount++;
                     } else if (this.pos >= this.input.length - 1) {
-                        throw "Unterminated value";
+                        throw TypeError("Unterminated value: value_braces");
                     };
                 };
                 if (this.input[this.pos] == '\\' && escaped == false)
@@ -133,7 +133,7 @@
                 if (this.input[this.pos] == '}')
                     brcktCnt--;
                 if (this.pos >= this.input.length - 1) {
-                    throw "Unterminated value:" + this.input.substring(start);
+                    throw TypeError("Unterminated value: value_comment", + this.input.substring(start));
                 };
                 this.pos++;
             };
@@ -151,7 +151,7 @@
                         this.match('"', false);
                         return this.input.substring(start, end);
                     } else if (this.pos >= this.input.length - 1) {
-                        throw "Unterminated value:" + this.input.substring(start);
+                        throw TypeError("Unterminated value: value_quotes", this.input.substring(start));
                     };
                 }
                 if (this.input[this.pos] == '\\' && escaped == false)
@@ -175,7 +175,7 @@
                 else if (this.months.indexOf(k.toLowerCase()) >= 0)
                     return k.toLowerCase();
                 else
-                    throw "Value expected:" + this.input.substring(start) + ' for key: ' + k;
+                    throw "Value expected: single_value" + this.input.substring(start) + ' for key: ' + k;
 
             };
         };
@@ -194,7 +194,7 @@
             var start = this.pos;
             while (true) {
                 if (this.pos >= this.input.length) {
-                    throw "Runaway key";
+                    throw TypeError("Runaway key: key");
                 };
                                 // а-яА-Я is Cyrillic
                 //console.log(this.input[this.pos]);
@@ -219,8 +219,8 @@
                 key = key.trim()
                 return [ key, val ];
             } else {
-                throw "... = value expected, equals sign missing:"
-                        + this.input.substring(this.pos);
+                throw TypeError("Value expected, equals sign missing: key_equals_value",
+                     this.input.substring(this.pos));
             };
         };
 

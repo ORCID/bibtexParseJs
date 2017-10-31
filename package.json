@@ -1,13 +1,13 @@
 {
   "name": "bibtex-parse-js",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "A JavaScript library that parses BibTeX to JSON",
   "main": "bibtexParse.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
-    "ava": "^0.15.2",
+    "ava": "^0.23.0",
     "xml2js": "*"
   },
   "scripts": {
