@@ -4,6 +4,9 @@
 //
 //CommonJS port by Mikola Lysenko 2013
 //
+//Choice of compact (default) or pretty output from toBibtex:
+//		Nick Bailey, 2017.
+//
 //Port to Browser lib by ORCID / RCPETERS
 //
 //Issues:
@@ -314,25 +317,36 @@
     };
 
     /* added during hackathon don't hate on me */
-    exports.toBibtex = function(json) {
+    /* Increased the amount of white-space to make entries
+     * more attractive to humans. Pass compact as false
+     * to enable */
+    exports.toBibtex = function(json, compact=true) {
         var out = '';
+        
+        var entrysep = ',';
+        var indent = '';
+        if (!compact) {
+		      entrysep = ',\n';
+		      indent = '    ';        
+        }
         for ( var i in json) {
             out += "@" + json[i].entryType;
             out += '{';
             if (json[i].citationKey)
-                out += json[i].citationKey + ', ';
+                out += json[i].citationKey + entrysep;
             if (json[i].entry)
                 out += json[i].entry ;
             if (json[i].entryTags) {
-                var tags = '';
+                var tags = indent;
                 for (var jdx in json[i].entryTags) {
-                    if (tags.length != 0)
-                        tags += ', ';
-                    tags += jdx + '= {' + json[i].entryTags[jdx] + '}';
+                    if (tags.trim().length != 0)
+                        tags += entrysep + indent;
+                    tags += jdx + (compact ? '={' : ' = {') + 
+                            json[i].entryTags[jdx] + '}';
                 }
                 out += tags;
             }
-            out += '}\n\n';
+            out += compact ? '}\n' : '\n}\n\n';
         }
         return out;
 
