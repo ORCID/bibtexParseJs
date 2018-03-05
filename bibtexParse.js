@@ -320,7 +320,8 @@
     /* Increased the amount of white-space to make entries
      * more attractive to humans. Pass compact as false
      * to enable */
-    exports.toBibtex = function(json, compact=true) {
+    exports.toBibtex = function(json, compact) {
+        if (compact === undefined) compact = true;
         var out = '';
         
         var entrysep = ',';
