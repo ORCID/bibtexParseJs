@@ -6,9 +6,8 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-    "ava": "^0.23.0",
-    "xml2js": "*"
+  "devDependencies": {
+    "ava": "^0.23.0"
   },
   "scripts": {
     "test": "ava"
