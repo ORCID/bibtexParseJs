@@ -172,7 +172,7 @@
             } else if (this.tryMatch('"')) {
                 return this.value_quotes();
             } else {
-                var k = this.key();
+                var k = this.key().trim();
                 if (k.match("^[0-9]+$"))
                     return k;
                 else if (this.months.indexOf(k.toLowerCase()) >= 0)
