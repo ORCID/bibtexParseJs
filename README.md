@@ -12,10 +12,13 @@ bibtexParse.toJSON('@article{sample1,title={sample title}}');
 ```
 
 ## Using in [Node.js](http://nodejs.org/)
-Install     ```npm install bibtex-parse-js```
+
+(Note: prior to v0.0.25, bibtex-parser-js was an uncoped package in npm. From v0.0.25 onwards it is published under the @orcid organization.)
+
+Install     ```npm install @orcid/bibtex-parse-js```
 
 ```
-var bibtexParse = require('bibtex-parse-js');
+var bibtexParse = require('@orcid/bibtex-parse-js');
 
 var sample = bibtexParse.toJSON('@article{sample1,title={sample title}}');
 

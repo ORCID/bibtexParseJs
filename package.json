@@ -1,5 +1,5 @@
 {
-  "name": "bibtex-parse-js",
+  "name": "@orcid/bibtex-parse-js",
   "version": "0.0.25",
   "description": "A JavaScript library that parses BibTeX to JSON",
   "main": "bibtexParse.js",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ORCID/bibtexParseJs"
+    "url": "git+https://github.com/ORCID/bibtexParseJs.git"
   },
   "keywords": [
     "bibtex",
@@ -24,8 +24,9 @@
   ],
   "author": "rcpeters",
   "license": "MIT",
-  "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/ORCID/bibtexParseJs/issues"
-  }
+  },
+  "homepage": "https://github.com/ORCID/bibtexParseJs#readme",
+  "dependencies": {}
 }
