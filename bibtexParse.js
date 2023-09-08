@@ -173,12 +173,12 @@
                 return this.value_quotes();
             } else {
                 var k = this.key();
-                if (k.match("^[0-9]+$"))
-                    return k;
+                if (k.match("^[0-9]+\n*$"))
+                    return parseInt(k);
                 else if (this.months.indexOf(k.toLowerCase()) >= 0)
                     return k.toLowerCase();
                 else
-                    throw "Value expected: single_value" + this.input.substring(start) + ' for key: ' + k;
+                    throw "Value expected: single_value " + this.input.substring(start) + ' for key: ' + k;
 
             };
         };
