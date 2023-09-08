@@ -128,7 +128,10 @@ fsdfsdfd
     </textarea>
     <button onclick="parseBibtex()">Parse</button>
 
+    <h1>JSON</h1>
     <pre id="outputDiv"></pre>
+    <h1>BibTeX</h1>
+    <pre id="bibtexDiv"></pre>
     <div id="errorDiv" style="color: red;"></div>
 
     <script>
@@ -140,15 +143,18 @@ fsdfsdfd
 			if (parsedJSON) {
 				const prettyJSON = JSON.stringify(parsedJSON, null, 2);
 				document.getElementById('outputDiv').textContent = prettyJSON;
+				document.getElementById('bibtexDiv').textContent = bibtexParse.toBibtex(parsedJSON, 0);
 				document.getElementById('errorDiv').textContent = "";
 				return parsedJSON;
 			} else {
 			    document.getElementById('outputDiv').textContent = "Invalid BibTeX input.";
+			    document.getElementById('bibtexDiv').textContent = "";
 			    document.getElementById('errorDiv').textContent = "";
 			}
 		} catch (error) {
 			console.warn("Error parsing BibTeX:", error);
 			document.getElementById('outputDiv').textContent = "An error occurred while parsing the input.";
+			document.getElementById('bibtexDiv').textContent = "";
 			document.getElementById('errorDiv').textContent = "Error: " + error.message;
 		}
 
