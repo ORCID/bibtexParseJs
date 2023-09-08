@@ -315,6 +315,70 @@
 
     exports.toJSON = function(bibtex) {
         var b = new BibtexParser();
+	function cleanBibtex(bibtex_code) {
+		// searches for lines that should begin with @, but dont, and add @ for resiliency
+		var at_regex = /(\s+|^)(\w+\{)/ig;
+		bibtex_code = bibtex_code.replace(at_regex, (match) => `${match[1].replace(/[\n\r\R]*/, "")}\n@${match.replace(/[\n\r\R]*/, "")}`);
+
+		// remove spaces before @ at beginning of line
+		var space_regex = /^\s*@/g;
+		bibtex_code = bibtex_code.replace(space_regex, "@");
+
+		var search_missing_commas_regex_stage_one = /(.*=.*)/g;
+		bibtex_code = bibtex_code.replace(search_missing_commas_regex_stage_one, "$1,");
+
+		var search_missing_commas_regex_stage_two = /(,\s*)+/g;
+		bibtex_code = bibtex_code.replace(search_missing_commas_regex_stage_two, ",\n");
+
+		var find_unfinished_double_quotes = /(=\s*"[^"]*?),+/g;
+		bibtex_code = bibtex_code.replace(find_unfinished_double_quotes, `$1",`);
+
+		var find_unfinished_bracket_quotes = /(=\s*\{[^\}]*?),+/g;
+		bibtex_code = bibtex_code.replace(find_unfinished_bracket_quotes, `$1},`);
+
+		var find_missing_quotation = /(.*=)([^\{"'].*?[^\}"']),/g;
+		bibtex_code = bibtex_code.replace(find_missing_quotation, `$1{$2},`);
+
+		var find_missing_bracket_quote_start = /(.*=)([^\{].*?\}),/g;
+		bibtex_code = bibtex_code.replace(find_missing_bracket_quote_start, `$1{$2,`);
+
+		var find_missing_article_type = /^\s*(?<=@)([a-zA-Z0-9_]*)/g;
+		if(bibtex_code.match(find_missing_article_type)) {
+			bibtex_code = bibtex_code.replace(find_missing_article_type, `@article{$1`);
+			console.log("Found no article type, added @article");
+		}
+
+		var lines = bibtex_code.split(/[\n\r]/);
+
+		function line_could_be_valid_syntax (line) {
+			if(line.match("^\s*@")) {
+				return true;
+			} else if(line.match("=")) {
+				return true;
+			} else if(line.match("}")) {
+				return true;
+			} else if(line.match(/^\s*$/)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		var new_lines = [];
+
+		for (var i = 0; i < lines.length; i++) {
+			if(line_could_be_valid_syntax(lines[i])) {
+				new_lines.push(lines[i]);
+			} else {
+				console.warn("The line " + lines[i] + " does not seem to contain a valid bibtex line");
+			}
+		}
+
+		return new_lines.join("\n");
+	}
+
+	bibtex = cleanBibtex(bibtex);
+
         b.setInput(bibtex);
         b.bibtex();
         return b.entries;
