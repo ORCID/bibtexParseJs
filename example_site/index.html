@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BibTeX Parser</title>
+</head>
+<body>
+    <script src="../bibtexParse.js"></script>
+
+    <h1>BibTeX to JSON Parser</h1>
+
+    <label for="bibtexInput">Enter BibTeX Code:</label>
+    <textarea id="bibtexInput" rows="5" cols="50">
+        @article{sample1,
+        title={sample title},
+        author="sample title"
+}
+
+@online{sample2,
+        title={sample title 2},
+        author="sample title 2",
+        year=1995,
+        url="https://google.de"
+}
+
+online{sample2,
+        title={sample title 2},
+        author="sample title 2"
+        year=1995,
+        url="https://google.de"
+}
+
+
+online{sample3,
+        title={sample title 3,
+        author="sample title 3"
+        year=19909,
+        url="https://google.de
+}
+
+online{sample4,
+        title=sample title 4,
+        author=sample title 4
+        year=199,
+        url="https://google.de
+}
+
+online{sample5,
+        title=sample title 5},
+        author=sample title 5}
+        year=199
+        url="https://google.de,,,
+
+        sfdfs
+
+        asdasdasd={12312
+}
+
+asdasdasdasd asd oaskfdösdfr234r 243r wef 
+
+@book{sample2,
+title={Buch ohne Autor},
+year={2019},
+}
+
+@article{sample#3,
+title={Unerwartete Zeichen im Schlüssel},
+author={Autor 3},
+year={2018},
+}
+
+@inproceedings{sample4,
+title={Titel mit falschen "Anführungszeichen"},
+author={Autor 4},
+year={2017},
+}
+
+@online{sample5,
+title={Ungültiges Feld},
+author={Autor 5},
+year={2021},
+url="https://example.com",
+publisher="Verlag 5",
+
+sample1,
+title={Fehlender Schlüssel},
+author={Autor 1},
+year={2022},
+url="https://example.com",
+}
+
+@book{sample6,
+title={Buch mit fehlendem Jahr},
+author={Autor 6},
+url="https://example.com",
+}
+
+@journal{sample7,
+title={Artikel mit falschem Eintragstyp},
+author={Autor 7},
+year={2015},
+}
+
+@article{sample8,
+title={Artikel mit Sonderzeichen wie !@# in Titel},
+author={Autor 8},
+year={2016},
+}
+
+@book{sample9,
+title={Buch 1},
+author={Autor 9},
+year={2020},
+}
+
+@book{sample9,
+title={Buch 2},
+author={Autor 10},
+year={2021},
+}
+
+@online{sample10,
+title={Online-Ressource mit unvollständiger URL},
+author={Autor 11},
+year={2019},
+url="example.com",
+}
+fsdfsdfd
+    </textarea>
+    <button onclick="parseBibtex()">Parse</button>
+
+    <pre id="outputDiv"></pre>
+    <div id="errorDiv" style="color: red;"></div>
+
+    <script>
+        function parseBibtex() {
+            try {
+                const bibtexInput = document.getElementById('bibtexInput').value;
+                const parsedJSON = bibtexParse.toJSON(bibtexInput);
+
+                if (parsedJSON) {
+                    const prettyJSON = JSON.stringify(parsedJSON, null, 2);
+                    document.getElementById('outputDiv').textContent = prettyJSON;
+                    document.getElementById('errorDiv').textContent = "";
+                } else {
+                    document.getElementById('outputDiv').textContent = "Invalid BibTeX input.";
+                    document.getElementById('errorDiv').textContent = "";
+                }
+            } catch (error) {
+                console.warn("Error parsing BibTeX:", error);
+                document.getElementById('outputDiv').textContent = "An error occurred while parsing the input.";
+                document.getElementById('errorDiv').textContent = "Error: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
+
