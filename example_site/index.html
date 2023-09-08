@@ -132,25 +132,28 @@ fsdfsdfd
     <div id="errorDiv" style="color: red;"></div>
 
     <script>
-        function parseBibtex() {
-            try {
-                const bibtexInput = document.getElementById('bibtexInput').value;
-                const parsedJSON = bibtexParse.toJSON(bibtexInput);
+	function parseBibtex() {
+		try {
+			const bibtexInput = document.getElementById('bibtexInput').value;
+			const parsedJSON = bibtexParse.toJSON(bibtexInput);
 
-                if (parsedJSON) {
-                    const prettyJSON = JSON.stringify(parsedJSON, null, 2);
-                    document.getElementById('outputDiv').textContent = prettyJSON;
-                    document.getElementById('errorDiv').textContent = "";
-                } else {
-                    document.getElementById('outputDiv').textContent = "Invalid BibTeX input.";
-                    document.getElementById('errorDiv').textContent = "";
-                }
-            } catch (error) {
-                console.warn("Error parsing BibTeX:", error);
-                document.getElementById('outputDiv').textContent = "An error occurred while parsing the input.";
-                document.getElementById('errorDiv').textContent = "Error: " + error.message;
-            }
-        }
+			if (parsedJSON) {
+				const prettyJSON = JSON.stringify(parsedJSON, null, 2);
+				document.getElementById('outputDiv').textContent = prettyJSON;
+				document.getElementById('errorDiv').textContent = "";
+				return parsedJSON;
+			} else {
+			    document.getElementById('outputDiv').textContent = "Invalid BibTeX input.";
+			    document.getElementById('errorDiv').textContent = "";
+			}
+		} catch (error) {
+			console.warn("Error parsing BibTeX:", error);
+			document.getElementById('outputDiv').textContent = "An error occurred while parsing the input.";
+			document.getElementById('errorDiv').textContent = "Error: " + error.message;
+		}
+
+		return {};
+	}
     </script>
 </body>
 </html>
