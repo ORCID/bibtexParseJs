@@ -190,7 +190,11 @@
                 this.match("#");
                 values.push(this.single_value());
             };
-            return values.join("");
+	    if(values.length == 1) {
+	        return values[0];
+	    } else {
+		return values.join("");
+	    }
         };
 
         this.key = function(optional) {
