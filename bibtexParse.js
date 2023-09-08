@@ -324,13 +324,13 @@
 		var space_regex = /^\s*@/g;
 		bibtex_code = bibtex_code.replace(space_regex, "@");
 
-		var search_missing_commas_regex_stage_one = /(.*=.*)/g;
+		var search_missing_commas_regex_stage_one = /(.*=.*)\s*$/g;
 		bibtex_code = bibtex_code.replace(search_missing_commas_regex_stage_one, "$1,");
 
-		var search_missing_commas_regex_stage_two = /(,\s*)+/g;
+		var search_missing_commas_regex_stage_two = /(,\s*)+\s*$/g;
 		bibtex_code = bibtex_code.replace(search_missing_commas_regex_stage_two, ",\n");
 
-		var find_unfinished_double_quotes = /(=\s*"[^"]*?),+/g;
+		var find_unfinished_double_quotes = /(=\s*"[^"]*?),+\s*$/g;
 		bibtex_code = bibtex_code.replace(find_unfinished_double_quotes, `$1",`);
 
 		var find_unfinished_bracket_quotes = /(=\s*\{[^\}]*?),+/g;
@@ -347,6 +347,8 @@
 			bibtex_code = bibtex_code.replace(find_missing_article_type, `@article{$1`);
 			console.log("Found no article type, added @article");
 		}
+
+		console.log(bibtex_code);
 
 		var lines = bibtex_code.split(/[\n\r]/);
 
