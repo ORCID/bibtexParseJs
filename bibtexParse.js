@@ -242,8 +242,16 @@
                     break;
                 }
                 ;
-                kv = this.key_equals_value();
-                this.currentEntry['entryTags'][kv[0]] = kv[1];
+		    try {
+			kv = this.key_equals_value();
+			this.currentEntry['entryTags'][kv[0]] = kv[1];
+		    } catch (e) {
+			    if(("" + e).includes("Value expected, equals sign missing: key_equals_value")) {
+				    console.warn("Warning: ignoring line");
+			    } else {
+				throw new Error(e);
+			    }
+		    }
             };
         };
 
@@ -306,7 +314,15 @@
                 } else {
                     this.entry(d);
                 }
-                this.match("}");
+		    try {
+			this.match("}");
+		    } catch (e) {
+			if(("" + e).includes("Token mismatch: match")) {
+				console.warn(e + ", ignoring line");
+			} else {
+				throw new Error(e);
+			}
+		    }
             };
 
             this.alernativeCitationKey();
